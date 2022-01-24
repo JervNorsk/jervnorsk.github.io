@@ -9,7 +9,7 @@ kotlin {
    sourceSets {
       val commonMain by getting {
          dependencies {
-            api(kotlinWrappers("react"))
+            api(kotlinWrappers("react-dom"))
          }
       }
    }
