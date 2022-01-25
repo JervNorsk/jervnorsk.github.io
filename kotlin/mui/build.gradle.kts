@@ -9,7 +9,7 @@ kotlin {
    sourceSets {
       val commonMain by getting {
          dependencies {
-            implementation(parent!!)
+            api(kotlinWrappers("mui"))
          }
       }
    }

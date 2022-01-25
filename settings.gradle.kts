@@ -17,11 +17,11 @@ dependencyResolutionManagement {
 // GitHub Pages
 include(":github:pages")
 
+// MUI
+include(":kotlin:mui")
+
 // Kotlin/JS React
 include(":kotlin:react")
-include(":kotlin:react:docs")
-
-// Kotlin/JS React DOM
 include(":kotlin:react-dom")
 
 // Kotlin/JS React Router

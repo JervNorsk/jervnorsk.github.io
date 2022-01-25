@@ -11,7 +11,7 @@ kotlin {
          runTask {
             devServer?.apply {
                open = false
-               static?.set(0, "${static?.first()}/io/github/pages")
+               static?.set(0, "${static?.first()}/io/github/jervnorsk")
             }
          }
       }
@@ -20,9 +20,9 @@ kotlin {
    sourceSets {
       val commonMain by getting {
          dependencies {
-            implementation(project(":kotlin:react"))
-            implementation(project(":kotlin:react:docs"))
+            implementation(project(":kotlin:mui"))
             
+            implementation(project(":kotlin:react"))
             implementation(project(":kotlin:react-dom"))
             
             implementation(project(":kotlin:react-router"))
