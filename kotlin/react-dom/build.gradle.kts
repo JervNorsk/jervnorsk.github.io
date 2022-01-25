@@ -9,7 +9,9 @@ kotlin {
    sourceSets {
       val commonMain by getting {
          dependencies {
-            api(kotlinWrappers("react-dom"))
+            api("org.jetbrains.kotlin-wrappers:kotlin-react-dom")
+   
+            implementation(project(":kotlin:react"))
          }
       }
    }

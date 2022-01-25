@@ -17,6 +17,9 @@ dependencyResolutionManagement {
 // GitHub Pages
 include(":github:pages")
 
+// JetBrains/kotlin-wrappers
+includeBuild("kotlin/wrappers")
+
 // MUI
 include(":kotlin:mui")
 

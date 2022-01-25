@@ -22,7 +22,7 @@ kotlin {
          dependencies {
             implementation(project(":kotlin:mui"))
             
-            implementation(project(":kotlin:react"))
+//            implementation(project(":kotlin:react"))
             implementation(project(":kotlin:react-dom"))
             
             implementation(project(":kotlin:react-router"))

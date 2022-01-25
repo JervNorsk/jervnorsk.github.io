@@ -64,10 +64,9 @@ private val Home = FC<Props> {
 
 private val Roster = FC<Props> {
    Routes {
-      Route { path = "/roster"; element = FullRoster.create() }
-      Route { path = "/roster/:number"; element = Player.create() }
+      Route { path = "/"; element = FullRoster.create() }
+      Route { path = "/:number"; element = Player.create() }
    }
-   Outlet {}
 }
 
 private val FullRoster = FC<Props> {
@@ -76,7 +75,7 @@ private val FullRoster = FC<Props> {
          PlayerAPI.map {
             li {
                key = it.number.toString()
-               
+
                Link { to = "/roster/${it.number}"; +it.name }
             }
          }
@@ -87,15 +86,16 @@ private val FullRoster = FC<Props> {
 private val Player = FC<Props> {
    val params = useParams()
    console.log(params)
-   val player = PlayerAPI.find { it.number == params["number"]!!.toInt() }
    
+   val player = PlayerAPI.find { it.number == params["number"]!!.toInt() }
+
    if (player == null) {
       div {
          +"Sorry, but the player was not found"
       }
       return@FC
    }
-   
+
    div {
       h1 { +"${player.name} #${player.number}" }
       h2 { +"Position: ${player.position}" }
