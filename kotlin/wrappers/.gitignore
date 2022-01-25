@@ -1,0 +1,12 @@
+.DS_Store
+.gradle/
+build/
+
+**/.idea/*
+!.idea/icon.png
+!.idea/vcs.xml
+*.iml
+*.ipr
+*.iws
+
+yarn.lock
