@@ -1,8 +1,10 @@
 plugins {
     id("com.github.turansky.kfc.library")
-    `typescript-declarations`
+    `three-declarations`
 }
 
+val threeTypesVersion = property("three-types.version") as String
+
 dependencies {
-    implementation(npmv("three"))
+    implementation(npm("@types/three", threeTypesVersion))
 }
