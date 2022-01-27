@@ -7,6 +7,6 @@ internal enum class Package(
     THREE("three", "three"),
     ;
 
-    val pkg = "package $id"
-    val path = id.replace(".", "/")
+//    val body = "package $id"
+//    val path = id.replace(".", "/")
 }

@@ -3,8 +3,8 @@ plugins {
     `three-declarations`
 }
 
-val threeTypesVersion = property("three-types.version") as String
+val threeVersion = property("three.version") as String
 
 dependencies {
-    implementation(npm("@types/three", threeTypesVersion))
+    implementation(npm("@types/three", threeVersion))
 }

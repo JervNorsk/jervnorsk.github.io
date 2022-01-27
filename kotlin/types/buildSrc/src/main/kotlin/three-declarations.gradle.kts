@@ -8,12 +8,12 @@ tasks.named("generateDeclarations") {
         
         delete(sourceDir)
     
-        val nodeModules = rootProject.buildDir.resolve("js/node_modules")
-        val threeFile = nodeModules.resolve("@types/three/index.d.ts")
-        
-        karakum.three.generateKotlinDeclarations(
-            threeFile = threeFile,
-            sourceDir = sourceDir
-        )
+        rootProject.buildDir.resolve("js/node_modules").apply {
+            
+            karakum.three.generateKotlinDeclarations(
+                sourceDir = sourceDir,
+                threeFile = resolve("@types/three/index.d.ts"),
+            )
+        }
     }
 }

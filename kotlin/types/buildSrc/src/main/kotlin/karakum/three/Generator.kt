@@ -1,59 +1,82 @@
 package karakum.three
 
-import karakum.common.GENERATOR_COMMENT
-import karakum.common.Suppress
-import karakum.common.fileSuppress
 import java.io.File
 
 fun generateKotlinDeclarations(
+   sourceDir: File,
    threeFile: File,
-   sourceDir: File,
 ) {
-   generate(threeFile, sourceDir, Package.THREE)
+   threeFile.generateKotlinDeclarations(sourceDir, Package.THREE)
 }
 
-private fun generate(
-   definitionsFile: File,
+private fun File.generateKotlinDeclarations(
    sourceDir: File,
-   pkg: Package
+   pck: Package
 ) {
-   val targetDir = sourceDir.resolve(pkg.path)
-      .also { it.mkdirs() }
-   
-   for ((name, body) in convertDefinitions(definitionsFile)) {
-      val suppresses = mutableListOf<Suppress>().apply {
-         if ("JsName(\"\"\"(" in body)
-            add(Suppress.NAME_CONTAINS_ILLEGAL_CHARS)
-         
-         if ("inline operator fun " in body)
-            add(Suppress.NOTHING_TO_INLINE)
-      }.toTypedArray()
-      
-      val annotations = when {
-         "external val " in body || "external fun " in body
-              -> "@file:JsModule(\"${pkg.moduleName}\")\n@file:JsNonModule"
-         
-         suppresses.isNotEmpty()
-              -> fileSuppress(*suppresses)
-         
-         else -> ""
-      }
-      
-      targetDir.resolve("$name.kt")
-         .writeText(fileContent(pkg, annotations, body))
-   }
+   readText()
 }
 
-private fun fileContent(
-   pkg: Package,
-   annotations: String,
-   body: String,
-): String {
-   return sequenceOf(
-      "// $GENERATOR_COMMENT",
-      annotations,
-      pkg.pkg,
-      body,
-   ).filter { it.isNotEmpty() }
-      .joinToString("\n\n")
-}
+//fun generateKotlinDeclarations(
+//   definitionsFile: File,
+//   sourceDir: File,
+//) {
+//   val targetDir = sourceDir.resolve("three")
+//      .also { it.mkdirs() }
+//
+//   definitionsFile.getImports()
+//      .flatMap { it.getImports() }
+//      .filter {
+//         it.name.startsWith("constants")
+//      }
+//      .flatMap { convertDefinitions(Package.THREE, it) }
+//      .onEach { (pkg, name, body) ->
+//         val annotations = when {
+//            "external " in body -> "@file:JsModule(\"three\")\n@file:JsNonModule"
+//            else                -> ""
+//         }
+//
+//         val file = targetDir.resolve("$name.kt")
+//         if (file.exists()) {
+//            if (name[0].isLowerCase()) {
+//               file.appendText("\n$body")
+//            } else {
+//               println("Duplicated file: $name")
+//            }
+//         } else {
+//            file.writeText(fileContent(pkg, annotations, body))
+//         }
+//      }
+//}
+//
+//private fun fileContent(
+//   pkg: Package,
+//   annotations: String,
+//   body: String,
+//): String {
+//   var result = sequenceOf(
+//      "// $GENERATOR_COMMENT",
+//      annotations,
+//      pkg.body,
+//      body,
+//   ).filter { it.isNotEmpty() }
+//      .joinToString("\n\n")
+//
+//   if (!result.endsWith("\n"))
+//      result += "\n"
+//
+//   return result
+//}
+//
+//private fun File.getImports() =
+//   readText()
+//      .replace("\r\n", "\n")
+//      .split("\n")
+//      .flatMap { Regex("export \\* from '(.*)'").findAll(it) }
+//      .map {
+//         it.groupValues[1]
+//            .replace("./", "")
+//            .plus(".d.ts")
+//            .let {
+//               parentFile.resolve(it)
+//            }
+//      }
