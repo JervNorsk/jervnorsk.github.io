@@ -10,6 +10,3 @@ private val toUpperCase: (MatchResult) -> CharSequence = {
 internal fun String.kebabToCamel(): String =
     replace(MINUS_LETTER, toUpperCase)
         .replace(SPACE_LETTER, toUpperCase)
-
-internal fun String.trimCarriageReturn(): String =
-    replace("\r\n", "\n")

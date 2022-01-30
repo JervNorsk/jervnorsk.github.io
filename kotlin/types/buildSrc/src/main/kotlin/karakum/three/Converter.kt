@@ -3,32 +3,48 @@ package karakum.three
 import java.io.File
 
 internal data class ConversionResult(
-   val pkg: Package,
+   val context: Context,
    val name: String,
    val body: String
 )
 
-internal fun convertDefinitions(
-   pkg: Package,
-   definitionsFile: File,
+internal fun File.convertDefinitions(
+   context: Context,
 ) =
-   definitionsFile.readText()
+   readText()
+      .convertDefinitions(context, parentFile)
+
+private fun String.convertDefinitions(
+   context: Context,
+   baseDir: File,
+): Sequence<ConversionResult> {
+   var result = replace("\r\n", "\n")
       .splitToSequence("export ")
       .map { it.replace(Regex("//.*\n"), "") }
       .map { it.trim() }
-      .map { it.convertDefinition(pkg) }
+      .map { it.convertDefinition(context) }
       .filterNotNull()
-      .onEach {
-         println("######")
-         println(it)
+   
+   splitToImport(baseDir)
+      .toList()
+//      .apply {
+//         if(this.isNotEmpty())
+//            println("#### Detected Imports")
+//         forEach { println(it) }
+//      }
+      .forEach { import ->
+         import.file.convertDefinitions(context)
+            .forEach {
+               result = result.plus(it)
+            }
       }
+   
+   return result
+}
 
 private fun String.convertDefinition(
-   pkg: Package
+   context: Context
 ): ConversionResult? {
-   println("######")
-//   println(this)
-   
    val name = substringAfter(" ")
       .substringBefore(" ")
       .substringBefore("<")
@@ -41,12 +57,10 @@ private fun String.convertDefinition(
       else    -> null
    }?.invoke(name, this.removePrefix("$type ")) ?: return null
    
-   //   println("------")
    val body = sequenceOf(content)
-      .filterNotNull()
       .joinToString("\n")
    
-   return ConversionResult(pkg, name, body)
+   return ConversionResult(context, name, body)
 }
 
 private fun convertConst(

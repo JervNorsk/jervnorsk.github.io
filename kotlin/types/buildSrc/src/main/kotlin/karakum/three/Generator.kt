@@ -1,6 +1,5 @@
 package karakum.three
 
-import karakum.common.forEachImport
 import java.io.File
 
 fun generateKotlinDeclarations(
@@ -12,11 +11,11 @@ fun generateKotlinDeclarations(
 
 private fun File.generateKotlinDeclarations(
    sourceDir: File,
-   pck: Package
+   pkg: Package
 ) =
-   readText()
-      .forEachImport(parentFile) {
-      
+   convertDefinitions(pkg.toContext())
+      .forEach {
+         println(it)
       }
 
 

@@ -1,4 +1,4 @@
-package karakum.common
+package karakum.three
 
 import java.io.File
 
@@ -21,10 +21,3 @@ internal fun String.splitToImport(
                Import(baseDir.resolve(it))
             }
       }
-
-internal fun String.forEachImport(
-   baseDir: File,
-   block: (Import) -> Unit
-) =
-   splitToImport(baseDir)
-      .forEach(block)
