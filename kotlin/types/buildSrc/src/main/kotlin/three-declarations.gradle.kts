@@ -12,9 +12,9 @@ tasks.named("generateDeclarations") {
             
             karakum.three.generateKotlinDeclarations(
                 sourceDir = sourceDir,
-//                threeFile = resolve("@types/three/index.d.ts"),
+                threeFile = resolve("@types/three/index.d.ts"),
 //                threeFile = resolve("@types/three/src/constants.d.ts")
-                  threeFile = resolve("@types/three/src/Three.d.ts")
+//                  threeFile = resolve("@types/three/src/Three.d.ts")
             )
         }
     }

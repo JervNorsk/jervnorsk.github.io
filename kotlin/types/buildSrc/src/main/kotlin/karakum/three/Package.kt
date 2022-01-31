@@ -1,15 +1,19 @@
 package karakum.three
 
-internal enum class Package(
-   id: String,
-   val moduleName: String,
-) {
-   THREE("three", "three"),
-   ;
+import java.io.File
 
-//    val body = "package $id"
+internal enum class Package(
+   val baseName: String,
+) {
+   THREE("three"),
+   ;
+   
+   fun createTargetDir(sourceDir: File) =
+      sourceDir.resolve(baseName).also { it.mkdirs() }
+   
+   val body = "package $baseName"
 //    val path = id.replace(".", "/")
    
-   fun toContext() : Context =
-      Context(this)
+   fun toContext(file: File): Context =
+      Context(this, file)
 }
