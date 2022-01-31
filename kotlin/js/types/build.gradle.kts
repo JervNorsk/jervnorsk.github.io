@@ -1,6 +1,6 @@
 plugins {
    kotlin("multiplatform")
-   id("io.github.jervnorsk.kotlin-gradle")
+   id("io.github.jervnorsk.kotlin")
 }
 
 allprojects {

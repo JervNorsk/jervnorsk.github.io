@@ -1,5 +1,6 @@
 plugins {
    kotlin("multiplatform")
+   id("maven-publish")
 }
 
 allprojects {
@@ -11,7 +12,12 @@ allprojects {
 }
 
 kotlin {
-   jvm()
+   jvm {
+      mavenPublication {
+//         artifactId = artifactId.replace("jvm", "plugin")
+         artifactId = "$groupId.kotlin.gradle.plugin"
+      }
+   }
    sourceSets {
       val commonMain by getting {
          dependencies {
