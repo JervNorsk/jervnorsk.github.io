@@ -1,4 +1,4 @@
-rootProject.name = "kotlin-js-types"
+rootProject.name = "kotlin-gradle"
 
 pluginManagement {
    resolutionStrategy {
@@ -13,6 +13,3 @@ dependencyResolutionManagement {
       mavenCentral()
    }
 }
-
-// JetBrains/kotlin-wrappers
-//includeBuild("../../wrappers")

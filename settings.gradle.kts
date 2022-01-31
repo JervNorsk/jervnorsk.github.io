@@ -14,8 +14,15 @@ dependencyResolutionManagement {
    }
 }
 
+// JervNorsk/kotlin-gradle
+includeBuild("kotlin/gradle") {
+   name = "kotlin-gradle"
+}
+
 // JervNorsk/kotlin-js-types
-includeBuild("kotlin/js/types")
+includeBuild("kotlin/js/types") {
+   name = "kotlin-js-types"
+}
 
 // GitHub Pages
 //include(":github:pages")

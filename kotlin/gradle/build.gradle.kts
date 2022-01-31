@@ -1,6 +1,5 @@
 plugins {
    kotlin("multiplatform")
-   id("io.github.jervnorsk.kotlin-gradle")
 }
 
 allprojects {
@@ -12,13 +11,11 @@ allprojects {
 }
 
 kotlin {
-   js {
-      browser()
-   }
+   jvm()
    sourceSets {
       val commonMain by getting {
          dependencies {
-//            api("org.jetbrains.kotlin-wrappers:kotlin-react-router-dom")
+            implementation(gradleKotlinDsl())
          }
       }
    }
