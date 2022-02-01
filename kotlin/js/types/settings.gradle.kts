@@ -14,8 +14,5 @@ dependencyResolutionManagement {
    }
 }
 
-// JervNorsk/kotlin-gradle
-includeBuild("../../gradle")
-
-// JetBrains/kotlin-wrappers
-//includeBuild("../../wrappers")
+// JervNorsk/kotlin
+includeBuild("../..")

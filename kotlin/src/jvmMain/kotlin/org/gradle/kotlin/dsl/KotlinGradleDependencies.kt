@@ -1,12 +1,11 @@
 package org.gradle.kotlin.dsl
 
-import org.gradle.api.artifacts.ExternalModuleDependency
 import org.jetbrains.kotlin.gradle.plugin.KotlinDependencyHandler
 import org.jetbrains.kotlin.gradle.plugin.mpp.DefaultKotlinDependencyHandler
 
 fun KotlinDependencyHandler.version(name: String) =
    when (this) {
-      is DefaultKotlinDependencyHandler -> project.extra["$name.version"] as String?
+      is DefaultKotlinDependencyHandler -> project.version(name)
       else                              -> TODO("Implementation not supported yet!")
    }
 

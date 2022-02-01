@@ -4,7 +4,7 @@ plugins {
 
 buildscript {
    dependencies {
-      classpath("io.github.jervnorsk:kotlin-gradle")
+      classpath("io.github.jervnorsk:kotlin")
    }
 }
 
@@ -22,8 +22,17 @@ kotlin {
    js {
       browser()
    }
+   jvm()
    sourceSets {
-      val commonMain by getting {
+      val jvmMain by getting {
+         dependencies {
+            api("io.github.jervnorsk:kotlin")
+   
+            implementation(gradleKotlinDsl())
+            implementation(kotlin("gradle-plugin"))
+         }
+      }
+      val jsMain by getting {
          dependencies {
             api(kotlinWrappers("typescript"))
          }
