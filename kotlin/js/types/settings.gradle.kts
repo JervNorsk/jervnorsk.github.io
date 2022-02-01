@@ -4,12 +4,6 @@ pluginManagement {
    resolutionStrategy {
       plugins {
          kotlin("multiplatform") version(extra["kotlin.version"] as String)
-         id("io.github.jervnorsk.kotlin") version(extra["kotlin.version"] as String)
-      }
-      repositories {
-         mavenLocal()
-         mavenCentral()
-         gradlePluginPortal()
       }
    }
 }
@@ -19,6 +13,9 @@ dependencyResolutionManagement {
       mavenCentral()
    }
 }
+
+// JervNorsk/kotlin-gradle
+includeBuild("../../gradle")
 
 // JetBrains/kotlin-wrappers
 //includeBuild("../../wrappers")

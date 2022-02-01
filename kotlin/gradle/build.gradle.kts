@@ -11,17 +11,17 @@ allprojects {
    }
 }
 
+repositories {
+   gradlePluginPortal()
+}
+
 kotlin {
-   jvm {
-      mavenPublication {
-//         artifactId = artifactId.replace("jvm", "plugin")
-         artifactId = "$groupId.kotlin.gradle.plugin"
-      }
-   }
+   jvm()
    sourceSets {
-      val commonMain by getting {
+      val jvmMain by getting {
          dependencies {
             implementation(gradleKotlinDsl())
+            implementation(kotlin("gradle-plugin"))
          }
       }
    }

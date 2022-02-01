@@ -1,7 +1,14 @@
 plugins {
    kotlin("multiplatform")
-   id("io.github.jervnorsk.kotlin")
 }
+
+buildscript {
+   dependencies {
+      classpath("io.github.jervnorsk:kotlin-gradle")
+   }
+}
+
+apply(plugin = "io.github.jervnorsk.kotlin")
 
 allprojects {
    version = kotlin.coreLibrariesVersion
@@ -18,7 +25,7 @@ kotlin {
    sourceSets {
       val commonMain by getting {
          dependencies {
-//            api("org.jetbrains.kotlin-wrappers:kotlin-react-router-dom")
+            api(kotlinWrappers("typescript"))
          }
       }
    }
