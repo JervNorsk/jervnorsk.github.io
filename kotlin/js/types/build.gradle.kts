@@ -20,7 +20,7 @@ allprojects {
 
 kotlin {
    js {
-      browser()
+      nodejs()
    }
    jvm()
    sourceSets {
@@ -34,7 +34,7 @@ kotlin {
       }
       val jsMain by getting {
          dependencies {
-            api(kotlinWrappers("typescript"))
+//            api(npm("dukat", "next"))
          }
       }
    }
