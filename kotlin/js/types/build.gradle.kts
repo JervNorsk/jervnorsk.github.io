@@ -34,7 +34,7 @@ kotlin {
       }
       val jsMain by getting {
          dependencies {
-//            api(npm("dukat", "next"))
+//            implementation(peerNpm("dukat", "next"))
          }
       }
    }

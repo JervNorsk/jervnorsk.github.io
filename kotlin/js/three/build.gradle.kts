@@ -20,14 +20,14 @@ allprojects {
 
 kotlin {
    js {
-      browser()
+      nodejs()
    }
    sourceSets {
       val jsMain by getting {
          dependencies {
-            api(npm("three", version("three")))
+//            api(npm("three", version("three")))
 
-            implementation(npm("@types/three", version("three"), generateExternals = true))
+//            implementation(npm("@types/three", version("three"), generateExternals = true))
          }
       }
    }

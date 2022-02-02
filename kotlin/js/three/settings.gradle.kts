@@ -14,7 +14,7 @@ dependencyResolutionManagement {
    }
 }
 
-// JervNorsk/kotlin-js-types
-includeBuild("../types") {
-   name = "kotlin-js-types"
-}
+//// JervNorsk/kotlin-js-types
+//includeBuild("../types") {
+//   name = "kotlin-js-types"
+//}

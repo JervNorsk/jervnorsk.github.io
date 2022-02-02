@@ -1,30 +1,9 @@
-pluginManagement {
-   resolutionStrategy {
-      plugins {
-         val kotlinVersion = extra["kotlin.version"] as String
-         
-         kotlin("multiplatform") version kotlinVersion
+with(rootProject) {
+   fileTree(projectDir)
+      .filter {
+         it.path.matches(Regex("${projectDir.path}/(\\w+/){1,2}settings[.]gradle.*"))
       }
-   }
-}
-
-dependencyResolutionManagement {
-   repositories {
-      mavenCentral()
-   }
-}
-
-// JervNorsk/kotlin
-includeBuild("kotlin") {
-   name = "kotlin"
-}
-
-// JervNorsk/kotlin-js-types
-includeBuild("kotlin/js/types") {
-   name = "kotlin-js-types"
-}
-
-// JervNorsk/kotlin-js-three
-includeBuild("kotlin/js/three") {
-   name = "kotlin-js-three"
+      .forEach {
+         apply(from = it)
+      }
 }

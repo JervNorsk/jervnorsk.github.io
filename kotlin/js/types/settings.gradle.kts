@@ -14,5 +14,7 @@ dependencyResolutionManagement {
    }
 }
 
-// JervNorsk/kotlin
-includeBuild("../..")
+//// JervNorsk/kotlin-js-types
+//includeBuild("../../tools/gradle/plugin") {
+//   name = "kotlin-gradle-plugin"
+//}
