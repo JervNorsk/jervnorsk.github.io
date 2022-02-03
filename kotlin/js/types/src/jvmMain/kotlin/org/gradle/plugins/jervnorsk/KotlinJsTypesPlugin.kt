@@ -2,19 +2,12 @@ package org.gradle.plugins.jervnorsk
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.closureOf
 import org.gradle.kotlin.dsl.get
-import org.gradle.kotlin.dsl.the
 import org.gradle.kotlin.dsl.withType
-import org.gradle.plugins.jervnorsk.KotlinGradlePlugin
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
-import org.jetbrains.kotlin.gradle.dsl.kotlinExtension
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinMultiplatformPlugin
-import org.jetbrains.kotlin.gradle.targets.js.KotlinJsTarget
 import org.jetbrains.kotlin.gradle.targets.js.dukat.IntegratedDukatTask
-import org.jetbrains.kotlin.gradle.targets.js.npm.KotlinNpmResolutionManager
-import org.jetbrains.kotlin.gradle.targets.js.npm.resolved.KotlinProjectNpmResolution
 import org.jetbrains.kotlin.gradle.targets.js.npm.tasks.KotlinNpmInstallTask
+import org.jetbrains.kotlin.gradle.targets.js.yarn.yarn
 
 abstract class KotlinJsTypesPlugin : Plugin<Project> {
    
@@ -22,21 +15,37 @@ abstract class KotlinJsTypesPlugin : Plugin<Project> {
       with(target) {
          plugins.apply(KotlinGradlePlugin::class.java)
    
-         println("TEST 2")
+         val registry = findProperty("dukat.npm.registry")
+         val owner = findProperty("dukat.npm.registry.owner")
+         val token = findProperty("dukat.npm.registry.auth.token")
          
-         plugins.withType<KotlinMultiplatformPlugin> {
-            kotlinExtension.apply {
-               println("TEST 3")
+         buildDir.resolve("js")
+            .apply { println(this) }
+            .apply {
+               if (!exists()) {
+                  mkdirs()
+               }
             }
-            the<KotlinMultiplatformExtension>().apply {
-               println("TEST")
-//               js {
-//                  compilations["main"].packageJson {
-//                     devDependencies["dukat"] = "test"
-//                  }
-//               }
+            .resolve(".npmrc")
+            .apply {
+               createNewFile()
+               writeText("""
+                  //$registry/:_authToken="$token"
+                  
+                  @$owner:registry=https://$registry
+               """.trimIndent())
+            }
+   
+         extensions.configure(KotlinMultiplatformExtension::class.java) {
+            with(it) {
+               js {
+                  compilations["main"].packageJson {
+                     devDependencies["@$owner/dukat"] = "latest"
+                  }
+               }
             }
          }
+   
          tasks.withType<KotlinNpmInstallTask> {
          
          }
