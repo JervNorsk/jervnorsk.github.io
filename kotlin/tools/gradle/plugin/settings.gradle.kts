@@ -1,4 +1,4 @@
-rootProject.name = "kotlin"
+rootProject.name = "kotlin-gradle-plugin"
 
 pluginManagement {
    resolutionStrategy {

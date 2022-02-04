@@ -4,7 +4,7 @@ plugins {
 
 buildscript {
    dependencies {
-      classpath("io.github.jervnorsk:kotlin")
+      classpath("io.github.jervnorsk:kotlin-gradle-plugin")
    }
 }
 
@@ -26,7 +26,7 @@ kotlin {
    sourceSets {
       val jvmMain by getting {
          dependencies {
-            api("io.github.jervnorsk:kotlin")
+            api("io.github.jervnorsk:kotlin-gradle-plugin")
    
             implementation(gradleKotlinDsl())
             implementation(kotlin("gradle-plugin"))

@@ -11,10 +11,6 @@ allprojects {
    }
 }
 
-repositories {
-   gradlePluginPortal()
-}
-
 kotlin {
    jvm()
    sourceSets {

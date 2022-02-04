@@ -2,12 +2,12 @@ package org.gradle.plugins.jervnorsk
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.get
+import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import org.jetbrains.kotlin.gradle.targets.js.NpmVersions
 import org.jetbrains.kotlin.gradle.targets.js.dukat.IntegratedDukatTask
 import org.jetbrains.kotlin.gradle.targets.js.npm.tasks.KotlinNpmInstallTask
-import org.jetbrains.kotlin.gradle.targets.js.yarn.yarn
 
 abstract class KotlinJsTypesPlugin : Plugin<Project> {
    
@@ -20,7 +20,6 @@ abstract class KotlinJsTypesPlugin : Plugin<Project> {
          val token = findProperty("dukat.npm.registry.auth.token")
          
          buildDir.resolve("js")
-            .apply { println(this) }
             .apply {
                if (!exists()) {
                   mkdirs()
@@ -36,22 +35,55 @@ abstract class KotlinJsTypesPlugin : Plugin<Project> {
                """.trimIndent())
             }
    
-         extensions.configure(KotlinMultiplatformExtension::class.java) {
-            with(it) {
-               js {
-                  compilations["main"].packageJson {
-                     devDependencies["@$owner/dukat"] = "latest"
+         afterEvaluate {
+            extensions.configure(KotlinMultiplatformExtension::class.java) {
+               with(it) {
+                  sourceSets.findByName("jsMain")?.apply {
+                     dependencies {
+                        implementation(devNpm("@$owner/dukat", "next"))
+                     }
+//                  packageJson {
+//                     devDependencies["@$owner/dukat"] = "next"
+//                  }
                   }
                }
             }
          }
    
          tasks.withType<KotlinNpmInstallTask> {
-         
+            doLast {
+               buildDir.resolve("js/node_modules").apply {
+                     resolve("dukat").let {
+                           if (it.exists()) {
+                              it.deleteRecursively()
+                           }
+                     
+                           resolve("@$owner/dukat").copyRecursively(it)
+                     
+                           it.resolve("package.json").apply {
+                                 readText().replace("@$owner/", "").apply(::writeText)
+                              }
+                        }
+                  }
+            }
          }
+   
          tasks.withType<IntegratedDukatTask> {
             destinationDir.deleteRecursively()
-            actions.clear()
+            doLast { task ->
+               buildDir.apply {
+                  resolve("js/node_modules/dukat/package.json").run {
+                        Regex("\\s+\"version\":\\s+\"(.*)\"").findAll(readText()).first().groups[1]?.value ?: "undefined"
+                     }.also { version ->
+                        resolve("externals/${project.name}/version.txt").apply {
+                              createNewFile()
+                              readText().replace(NpmVersions().dukat.version, version).also { content ->
+                                    writeText(content)
+                                 }
+                           }
+                     }
+               }
+            }
          }
       }
    }

@@ -11,7 +11,8 @@ buildscript {
 apply(plugin = "io.github.jervnorsk.kotlin-js-types")
 
 allprojects {
-   version = version("three")
+   version = kotlin.coreLibrariesVersion
+//   version = version("three")
 
    afterEvaluate {
       println("$group:$name:$version")

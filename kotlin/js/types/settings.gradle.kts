@@ -13,8 +13,3 @@ dependencyResolutionManagement {
       mavenCentral()
    }
 }
-
-//// JervNorsk/kotlin-js-types
-//includeBuild("../../tools/gradle/plugin") {
-//   name = "kotlin-gradle-plugin"
-//}

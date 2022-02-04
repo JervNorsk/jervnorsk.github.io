@@ -13,8 +13,3 @@ dependencyResolutionManagement {
       mavenCentral()
    }
 }
-
-//// JervNorsk/kotlin-js-types
-//includeBuild("../types") {
-//   name = "kotlin-js-types"
-//}
