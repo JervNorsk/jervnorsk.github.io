@@ -28,7 +28,7 @@ kotlin {
          dependencies {
 //            api(npm("three", version("three")))
 
-//            implementation(npm("@types/three", version("three"), generateExternals = true))
+            implementation(npm("@types/three", version("three")))//, generateExternals = true))
          }
       }
    }

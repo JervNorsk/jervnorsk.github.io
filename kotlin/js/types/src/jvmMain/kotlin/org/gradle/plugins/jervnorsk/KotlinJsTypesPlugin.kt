@@ -69,8 +69,8 @@ abstract class KotlinJsTypesPlugin : Plugin<Project> {
          }
    
          tasks.withType<IntegratedDukatTask> {
-            destinationDir.deleteRecursively()
-            doLast { task ->
+//            destinationDir.deleteRecursively()
+            doLast {
                buildDir.apply {
                   resolve("js/node_modules/dukat/package.json").run {
                         Regex("\\s+\"version\":\\s+\"(.*)\"").findAll(readText()).first().groups[1]?.value ?: "undefined"
