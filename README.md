@@ -1,1 +1,0 @@
-# jervnorsk.github.io
