@@ -1,0 +1,4 @@
+[submodule "aster"]
+	path = aster
+	url = https://github.com/JervNorsk/aster
+	branch = main
