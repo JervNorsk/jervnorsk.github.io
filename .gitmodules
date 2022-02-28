@@ -2,3 +2,7 @@
 	path = aster
 	url = https://github.com/JervNorsk/aster
 	branch = main
+[submodule "gene-hunter"]
+	path = gene-hunter
+	url = https://github.com/JervNorsk/Gene-Hunter.git
+	branch = main
