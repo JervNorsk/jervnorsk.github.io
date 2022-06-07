@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  proxy:
+    image: ghcr.io/jervnorsk/nginx
+    volumes:
+      - ./proxy/swap:/srv/docker/swap
+    networks:
+      - public
+    restart: always
+    ports:
+      - "50100:80"
+
+networks:
+  public:
+    name: www
+    external: true
