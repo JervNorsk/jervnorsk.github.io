@@ -1,0 +1,8 @@
+{
+    "shortName": "Piano",
+    "name": "Boolean Apps - Pianoforte",
+    "icon": {
+        "src": "./assets/images/icon.png"
+    },
+    "display": "fullscreen"
+}
