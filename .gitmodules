@@ -1,0 +1,3 @@
+[submodule "pages/courses"]
+	path = pages/courses
+	url = https://github.com/JervNorsk/Courses.git
