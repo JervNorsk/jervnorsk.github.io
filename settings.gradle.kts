@@ -39,4 +39,4 @@ fun includeProjects(baseDir: File, parentPath: String = "") {
         }
 }
 
-includeProjects("pages")
+//includeProjects("pages")
