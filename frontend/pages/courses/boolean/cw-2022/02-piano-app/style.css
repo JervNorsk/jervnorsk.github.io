@@ -28,13 +28,13 @@ body {
     padding-right: 24px;
 
     background-color: #F71469;
+    background-image: url("assets/images/panel-reflex.png");
+    background-repeat: no-repeat;
+    background-size: contain;
 }
 
-.piano-logo {
-    width: 100px;
-    height: 50px;
-
-    background-color: #FFF;
+.piano-panel img {
+    width: 160px;
 }
 
 .piano-keys {

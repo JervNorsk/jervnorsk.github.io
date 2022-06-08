@@ -1,8 +1,11 @@
 {
     "shortName": "Piano",
-    "name": "Boolean Apps - Pianoforte",
-    "icon": {
-        "src": "./assets/images/icon.png"
-    },
+    "name": "Boolean - Pianoforte",
+    "icon": [{
+        "src": "./assets/images/icon.png",
+        "type": "image/png",
+        "sizes": "192x192"
+    }],
+    "theme_color": "#F71469",
     "display": "fullscreen"
 }
