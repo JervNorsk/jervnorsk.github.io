@@ -1,0 +1,11 @@
+{
+    "shortName": "Duck",
+    "name": "Boolean - Talking Duck",
+    "icon": [{
+        "src": "./assets/images/icon.png",
+        "type": "image/png",
+        "sizes": "192x192"
+    }],
+    "theme_color": "#F71469",
+    "display": "fullscreen"
+}
