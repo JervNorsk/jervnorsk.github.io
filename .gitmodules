@@ -1,0 +1,3 @@
+[submodule "Projects/Unity/WheelSpinner"]
+	path = Projects/Unity/WheelSpinner
+	url = git@github.com:JervNorsk/WheelSpinner.git
