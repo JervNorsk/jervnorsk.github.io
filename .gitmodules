@@ -1,3 +1,11 @@
 [submodule "Projects/Unity/WheelSpinner"]
 	path = Projects/Unity/WheelSpinner
 	url = git@github.com:JervNorsk/WheelSpinner.git
+[submodule "Services/Docker/Images"]
+	path = Services/Docker/Images
+	url = git@github.com:JervNorsk/docker-images.git
+	branch = main
+[submodule "Services/JNT"]
+	path = Services/JNT
+	url = git@github.com:JervNorsk/JNT.git
+	branch = main
