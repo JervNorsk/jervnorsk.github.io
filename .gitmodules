@@ -1,0 +1,4 @@
+[submodule "Integrations/Lovense"]
+	path = Integrations/Lovense
+	url = https://github.com/JervNorsk/lovense.com.git
+	branch = main
