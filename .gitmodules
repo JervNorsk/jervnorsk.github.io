@@ -2,3 +2,7 @@
 	path = Integrations/Lovense
 	url = https://github.com/JervNorsk/lovense.com.git
 	branch = main
+[submodule "Public/Portfolio"]
+	path = Public/Portfolio
+	url = https://github.com/JervNorsk/portfolio.jervnorsk.github.io.git
+	branch = main
