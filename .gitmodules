@@ -4,5 +4,9 @@
 	branch = github/pages
 [submodule "projects/website"]
 	path = projects/website
-	url = https://github.com/JervNorsk/website.jervnorsk.github.io.git
+	url = https://github.com/JervNorsk/website.git
+	branch = main
+[submodule "projects/streaming-digest"]
+	path = projects/streaming-digest
+	url = https://github.com/JervNorsk/streaming-digest.git
 	branch = main
