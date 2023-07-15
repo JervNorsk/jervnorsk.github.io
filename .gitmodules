@@ -10,3 +10,7 @@
 	path = projects/streaming-digest
 	url = https://github.com/JervNorsk/streaming-digest.git
 	branch = main
+[submodule "extensions/pcg/streaming"]
+	path = extensions/pcg/streaming
+	url = https://github.com/JervNorsk/pcg-streaming-extension.git
+	branch = main
