@@ -1,4 +1,0 @@
-[submodule ".github/pages"]
-	path = .github/pages
-	url = https://github.com/JervNorsk/website.jervnorsk.github.io.git
-	branch = github/pages

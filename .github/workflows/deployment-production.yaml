@@ -47,13 +47,4 @@ jobs:
           angular_dist_build_folder: services/app/dist/app
           deploy_branch: github/pages
           base_href: /
-      - uses: cpina/github-action-push-to-another-repository@main
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.WORKSPACE_GITHUB_TOKEN }}
-        with:
-          destination-github-username: jervnorsk
-          destination-repository-name: jervnorsk.github.io
-          user-email: jerv.norsk@github.com
-          source-directory: services/app/dist/app
-          target-branch: github/pages
 
