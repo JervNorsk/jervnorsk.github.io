@@ -15,6 +15,7 @@ if ! grep -q "mise activate" ~/.bashrc; then
     echo "eval \"\$(/home/vscode/.local/bin/mise activate bash)\"" >> ~/.bashrc
 fi
 export PATH="/home/vscode/.local/share/mise/shims:/home/vscode/.local/bin:$PATH"
+export MISE_EXPERIMENTAL=true
 
 # -- Installazione delle dipendenze definite nel mise.toml
 echo "📦 Installazione del toolchain tramite Mise..."

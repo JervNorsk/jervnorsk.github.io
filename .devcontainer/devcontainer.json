@@ -1,5 +1,5 @@
 {
-  "name": "CNCF Dev Space",
+  "name": "JervNorsk Website",
   "image": "mcr.microsoft.com/devcontainers/base:jammy",
   "features": {
     "ghcr.io/devcontainers/features/docker-in-docker:3": {
@@ -41,5 +41,8 @@
   "postCreateCommand": "bash .devcontainer/setup.sh",
 //  "mounts": [
 //    "source=mise-cache,target=/home/vscode/.local/share/mise,type=volume"
+//  ]
+//  "forwardPorts": [
+//    "3000:3000"
 //  ]
 }

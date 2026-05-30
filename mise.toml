@@ -1,9 +1,7 @@
 [tools]
-node = "24.16.0"
 skaffold = "latest"
 k3d = "latest"
 helm = "latest"
-pnpm = "latest"
 kubectl = "latest"
 
 [env]
