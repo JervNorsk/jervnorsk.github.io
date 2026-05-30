@@ -1,0 +1,14 @@
+[tools]
+node = "24.16.0"
+skaffold = "latest"
+k3d = "latest"
+helm = "latest"
+pnpm = "latest"
+kubectl = "latest"
+
+[env]
+K8S_CLUSTER_NAME = 'dev'
+
+[tasks."dev"]
+description = "Avvia l'Inner Loop con Skaffold"
+run = "skaffold dev --port-forward"
