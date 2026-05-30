@@ -42,7 +42,7 @@
 //  "mounts": [
 //    "source=mise-cache,target=/home/vscode/.local/share/mise,type=volume"
 //  ]
-//  "forwardPorts": [
-//    "3000:3000"
-//  ]
+  "forwardPorts": [
+    3000
+  ]
 }

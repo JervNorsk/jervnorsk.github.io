@@ -2,3 +2,6 @@
 node = "24.16.0"
 npm = "latest"
 
+[tasks."dev"]
+description = "Run application in development mode"
+run = "npm run dev"
