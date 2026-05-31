@@ -39,14 +39,8 @@
   },
   "remoteUser": "vscode",
   "postCreateCommand": "bash .devcontainer/setup.sh",
-//  "mounts": [
-//    "source=mise-cache,target=/home/vscode/.local/share/mise,type=volume"
-//  ]
   "forwardPorts": [
     6443,
     3000
-  ],
-  containerEnv: {
-    "MISE_EXPERIMENTAL": "true"
-  }
+  ]
 }

@@ -7,7 +7,62 @@ config_roots = [
 ]
 
 [env]
+# ==== MISE =========================================================
+MISE_EXPERIMENTAL = "true"
+MISE_LOG_LEVEL = "INFO"
+MISE_PROJECT_NAME = "{{config_root | basename}}"
+
+# ==== INFRASTRUCTURE ===============================================
 K8S_CLUSTER_NAME = 'dev'
+
+[tools]
+node = "24.16.0"
+devcontainer-cli = "latest"
+
+[tasks."devcontainer:up"]
+description = "Create an isolate container where develop"
+run = '''
+#!/usr/bin/env bash
+
+devcontainer up --workspace-folder . --id-label name='{{ env.MISE_PROJECT_NAME }}'
+'''
+
+[tasks."devcontainer:down"]
+description = "Destroy the devcontainer"
+run = '''
+#!/usr/bin/env bash
+CONTAINER_ID=$(docker ps -a -q --filter "label=name=${MISE_PROJECT_NAME}")
+
+if [ -z "$CONTAINER_ID" ]; then
+    echo "Nessun devcontainer attivo trovato per il progetto: ${MISE_PROJECT_NAME}"
+    exit 0
+fi
+
+echo "Arresto e rimozione del devcontainer per ${MISE_PROJECT_NAME} (ID: ${CONTAINER_ID})..."
+
+# 2. Ferma e rimuove il container in modo forzato (-f)
+docker rm -f "${CONTAINER_ID}"
+
+echo "Container rimosso con successo."
+'''
+
+[tasks."devcontainer:exec"]
+description = "Attach a bash session to the devcontainer"
+usage = '''
+ arg "<args>" help="Arguments to pass"
+'''
+run = '''
+#!/usr/bin/env bash
+devcontainer exec --workspace-folder . --id-label name='{{ env.MISE_PROJECT_NAME }}' {{ usage.args }}
+'''
+
+[tasks."devcontainer:shell"]
+description = "Attach a bash session to the devcontainer"
+run = '''
+#!/usr/bin/env bash
+devcontainer up --workspace-folder . --id-label name='{{ env.MISE_PROJECT_NAME }}'
+devcontainer exec --workspace-folder . --id-label name='{{ env.MISE_PROJECT_NAME }}' bash
+'''
 
 #[tasks."dev"]
 #description = "Avvia l'Inner Loop con Skaffold"
