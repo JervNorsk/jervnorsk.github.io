@@ -1,14 +1,14 @@
 experimental_monorepo_root = true
 
-[tools]
-skaffold = "latest"
-k3d = "latest"
-helm = "latest"
-kubectl = "latest"
+[monorepo]
+config_roots = [
+  "infra",
+  "apps/portfolio"
+]
 
 [env]
 K8S_CLUSTER_NAME = 'dev'
 
-[tasks."dev"]
-description = "Avvia l'Inner Loop con Skaffold"
-run = "skaffold dev --port-forward"
+#[tasks."dev"]
+#description = "Avvia l'Inner Loop con Skaffold"
+#run = "skaffold dev --port-forward"

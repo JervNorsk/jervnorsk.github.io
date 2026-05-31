@@ -1,0 +1,120 @@
+[tools]
+skaffold = "latest"
+k3d = "latest"
+helm = "latest"
+kubectl = "latest"
+
+[tasks."cluster:up"]
+description = "Create a lightweight Kubernetes cluster"
+usage ='''
+  flag "-f --force" help="Force to recreate the cluster"
+'''
+run = '''
+#!/usr/bin/env bash
+set -e
+
+if k3d cluster list | grep -q "${K8S_CLUSTER_NAME}"; then
+  if [ "${usage_force:-false}" = "true" ]; then
+    mise ops:k8s:cluster:down
+  else
+    mise ops:k8s:cluster:connect
+  fi
+else
+  echo ""
+  echo "----------------------------------------"
+  echo "Creating cluster '${K8S_CLUSTER_NAME}':"
+  echo "----------------------------------------"
+  k3d cluster create "${K8S_CLUSTER_NAME}" --wait -p "51820:51820/UDP@loadbalancer"
+
+  echo ""
+  echo "----------------------------------------"
+  echo "Testing cluster '${K8S_CLUSTER_NAME}' connection:"
+  echo "----------------------------------------"
+  kubectl cluster-info
+fi
+'''
+
+[tasks."cluster:down"]
+description = "Destroy Kubernetes cluster"
+run = '''
+#!/usr/bin/env bash
+set -e
+
+if ! k3d cluster list | grep -q "${K8S_CLUSTER_NAME}"; then
+  exit 0
+else
+  echo ""
+  echo "----------------------------------------"
+  echo "Deleting cluster '$K8S_CLUSTER_NAME':"
+  echo "----------------------------------------"
+  k3d cluster delete "$K8S_CLUSTER_NAME"
+fi
+'''
+
+[tasks."cluster:start"]
+description = "Start Kubernetes cluster"
+run = '''
+#!/usr/bin/env bash
+set -e
+
+if ! k3d cluster list | grep -q "${K8S_CLUSTER_NAME}"; then
+  echo ""
+  echo "----------------------------------------"
+  echo "Cluster '$K8S_CLUSTER_NAME' not found. Operation aborted."
+  echo "----------------------------------------"
+  exit 1
+else
+  echo ""
+  echo "----------------------------------------"
+  echo "Starting cluster '${K8S_CLUSTER_NAME}':"
+  echo "----------------------------------------"
+  k3d cluster start "${K8S_CLUSTER_NAME}"
+fi
+'''
+
+[tasks."cluster:stop"]
+description = "Stop Kubernetes cluster"
+run = '''
+#!/usr/bin/env bash
+set -e
+
+if ! k3d cluster list | grep -q "${K8S_CLUSTER_NAME}"; then
+  echo ""
+  echo "----------------------------------------"
+  echo "Cluster '$K8S_CLUSTER_NAME' not found. Operation aborted."
+  echo "----------------------------------------"
+  exit 1
+else
+  echo ""
+  echo "----------------------------------------"
+  echo "Stopping cluster '${K8S_CLUSTER_NAME}':"
+  echo "----------------------------------------"
+  k3d cluster stop "${K8S_CLUSTER_NAME}"
+fi
+'''
+
+[tasks."cluster:connect"]
+description = "Reconcile Kubernetes cluster configuration"
+run = '''
+#!/usr/bin/env bash
+set -e
+
+if ! k3d cluster list | grep -q "$K8S_CLUSTER_NAME"; then
+  echo ""
+  echo "----------------------------------------"
+  echo "Cluster '$K8S_CLUSTER_NAME' not found. Operation aborted."
+  echo "----------------------------------------"
+  exit 1
+else
+  mkdir -p /home/vscode/.kube
+  k3d kubeconfig get "$K8S_CLUSTER_NAME" > /home/vscode/.kube/config
+
+  chmod 600 /home/vscode/.kube/config
+
+  echo ""
+  echo "----------------------------------------"
+  echo "Testing cluster '$K8S_CLUSTER_NAME' connection:"
+  echo "----------------------------------------"
+  kubectl cluster-info
+fi
+'''

@@ -2,6 +2,12 @@
 node = "24.16.0"
 npm = "latest"
 
+[tasks."setup"]
+description = "Configure project"
+run = [
+  "npm install"
+]
+
 [tasks."dev"]
 description = "Run application in development mode"
 run = "npm run dev"
