@@ -8,6 +8,11 @@ run = [
   "npm install"
 ]
 
+[tasks."build"]
+description = "Build application"
+run = "npm run build"
+
+
 [tasks."dev"]
 description = "Run application in development mode"
 run = "npm run dev"

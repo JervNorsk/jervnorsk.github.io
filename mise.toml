@@ -2,7 +2,6 @@ experimental_monorepo_root = true
 
 [monorepo]
 config_roots = [
-  "infra",
   "apps/portfolio"
 ]
 
