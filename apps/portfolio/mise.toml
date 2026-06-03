@@ -11,3 +11,7 @@ run = [
 [tasks."dev"]
 description = "Run application in development mode"
 run = "npm run dev"
+
+[tasks."storybook"]
+description = "Run storybook"
+run = "npm run storybook"

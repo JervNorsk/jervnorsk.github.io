@@ -1,0 +1,14 @@
+@import "../src/app/globals.css";
+
+@layer base {
+  html {
+    /*@apply bg-amber-700;*/
+  }
+  body {
+    /*@apply bg-amber-600;*/
+  }
+  #storybook-root {
+    @apply h-full;
+    /*@apply bg-amber-500;*/
+  }
+}

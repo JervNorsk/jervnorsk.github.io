@@ -19,6 +19,15 @@ K8S_CLUSTER_NAME = 'dev'
 node = "24.16.0"
 devcontainer-cli = "latest"
 
+[tasks."agent:context:resume"]
+description = "Create a single file that resume the current context of repository"
+run = '''
+#!/usr/bin/env bash
+
+npx repomix --include '*.*,apps/portfolio/**/*.*'
+'''
+hide = true
+
 [tasks."devcontainer:up"]
 description = "Create an isolate container where develop"
 run = '''
