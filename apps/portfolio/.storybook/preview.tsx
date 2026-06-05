@@ -5,6 +5,8 @@ import type { Preview } from '@storybook/nextjs-vite'
 //@ts-ignore
 import "./preview.css";
 
+import { MINIMAL_VIEWPORTS, INITIAL_VIEWPORTS } from 'storybook/viewport';
+
 const preview: Preview = {
   parameters: {
     controls: {
@@ -13,6 +15,15 @@ const preview: Preview = {
        date: /Date$/i,
       },
     },
+    viewport: {
+      options: {
+        ...MINIMAL_VIEWPORTS,
+        ...INITIAL_VIEWPORTS
+      }
+    },
+    // nextjs: {
+    //   appDirectory: true,
+    // },
   },
   decorators: [
     (Story, context) => {

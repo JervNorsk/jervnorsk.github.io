@@ -10,13 +10,20 @@ run = [
 
 [tasks."build"]
 description = "Build application"
-run = "npm run build"
-
+run = "npm run next:build"
 
 [tasks."dev"]
 description = "Run application in development mode"
-run = "npm run dev"
+run = "npm run next:dev"
 
-[tasks."storybook"]
+[tasks."start"]
+description = "Run application in production mode"
+run = "npm run next:start"
+
+[tasks."storybook:dev"]
 description = "Run storybook"
-run = "npm run storybook"
+run = "npm run storybook:dev"
+
+[tasks."storybook:build"]
+description = "Build storybook"
+run = "npm run storybook:build"

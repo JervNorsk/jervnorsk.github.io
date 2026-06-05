@@ -42,16 +42,10 @@ run = '''
 CONTAINER_ID=$(docker ps -a -q --filter "label=name=${MISE_PROJECT_NAME}")
 
 if [ -z "$CONTAINER_ID" ]; then
-    echo "Nessun devcontainer attivo trovato per il progetto: ${MISE_PROJECT_NAME}"
-    exit 0
+  exit 1
 fi
 
-echo "Arresto e rimozione del devcontainer per ${MISE_PROJECT_NAME} (ID: ${CONTAINER_ID})..."
-
-# 2. Ferma e rimuove il container in modo forzato (-f)
 docker rm -f "${CONTAINER_ID}"
-
-echo "Container rimosso con successo."
 '''
 
 [tasks."devcontainer:exec"]

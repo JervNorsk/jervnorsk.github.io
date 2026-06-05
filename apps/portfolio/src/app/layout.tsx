@@ -34,7 +34,7 @@ export default function RootLayout({
         // sans.variable
       ])}
     >
-    <body id="app" className="flex flex-col">
+    <body id="app">
     <ThemeProvider
       attribute="class"
       defaultTheme="system"

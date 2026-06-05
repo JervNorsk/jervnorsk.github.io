@@ -1,7 +1,7 @@
 import type {NextConfig} from "next";
 
 const nextConfig: NextConfig = {
-  distDir: 'build/html',
+  distDir: 'build/nextjs',
   output: "export",
 
   images: {

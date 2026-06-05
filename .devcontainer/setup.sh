@@ -1,25 +1,43 @@
 #!/bin/bash
 set -e
 
-echo "🚀 Inizializzazione dell'ambiente di sviluppo..."
+echo "=================================================="
+echo "--> [1/4] Fixing Directory Permissions..."
+echo "=================================================="
+sudo mkdir -p /home/vscode/.local/bin \
+             /home/vscode/.local/share/mise
 
-# -- Git configuration
-git config --global --add safe.directory /workspaces/workspace
+sudo chown -R vscode:vscode /home/vscode/.local
+
+echo "=================================================="
+echo "--> [2/4] Configuring Git Settings..."
+echo "=================================================="
+git config --global --add safe.directory /workspaces/workspace || true
 git config --global core.autocrlf input
 
-# -- Installazione di Mise
-curl https://mise.run | sh
-
-# -- Configurazione di Mise
-if ! grep -q "mise activate" ~/.bashrc; then
-    echo "eval \"\$(/home/vscode/.local/bin/mise activate bash)\"" >> ~/.bashrc
+echo "=================================================="
+echo "--> [3/4] Installing/Verifying mise-en-place..."
+echo "=================================================="
+if [ ! -f "$HOME/.local/bin/mise" ]; then
+    echo "Mise binary not found. Initiating clean installation..."
+    curl https://mise.run | sh
+else
+    echo "Mise binary detected at $HOME/.local/bin/mise. Skipping network setup."
 fi
+
+if ! grep -q "mise activate" ~/.bashrc; then
+    echo 'eval "$(/home/vscode/.local/bin/mise activate bash)"' >> ~/.bashrc
+fi
+
 export PATH="/home/vscode/.local/share/mise/shims:/home/vscode/.local/bin:$PATH"
 
-# -- Installazione delle dipendenze definite nel mise.toml
-echo "📦 Installazione del toolchain tramite Mise..."
+echo "=================================================="
+echo "--> [4/4] Executing Mise Toolchain Installation..."
+echo "=================================================="
+export MISE_TRUSTED_CONFIG_HOME=1
 mise trust -y
-mise install
+mise install --verbose
 
-echo "✅ Ambiente pronto. Puoi avviare il cluster con: mise run cluster:create"
-
+echo "=================================================="
+echo "--> Environment Setup Completed Successfully."
+echo "=================================================="

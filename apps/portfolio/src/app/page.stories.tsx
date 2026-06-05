@@ -12,24 +12,12 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-/**
- * Scenario Base: Verifica il rendering della pagina con i parametri di default.
- * Utilizza i decorator globali definiti in preview.tsx per iniettare le classi del tema scuro.
- */
 export const Default: Story = {};
 
-// export const Mobile: Story = {
-//   parameters: {
-//     viewport: {
-//       defaultViewport: 'sm',
-//     },
-//   },
-// };
-//
-// export const DesktopXL: Story = {
-//   parameters: {
-//     viewport: {
-//       defaultViewport: 'xl',
-//     },
-//   },
+// export const Desktop: Story = {
+//   globals: {
+//     options: {
+//       viewport: { value: 'Desktop', isRotated: true },
+//     }
+//   }
 // };

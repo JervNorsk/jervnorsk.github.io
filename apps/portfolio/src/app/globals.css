@@ -136,6 +136,7 @@
   }
   #app {
     @apply bg-background text-foreground;
-    @apply h-full flex flex-col;
+    @apply h-full;
+    @apply flex justify-center items-center;
   }
 }
