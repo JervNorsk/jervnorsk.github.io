@@ -21,9 +21,13 @@ description = "Run application in production mode"
 run = "npm run next:start"
 
 [tasks."storybook:dev"]
-description = "Run storybook"
+description = "Run storybook application"
 run = "npm run storybook:dev"
 
 [tasks."storybook:build"]
-description = "Build storybook"
+description = "Build storybook stories"
 run = "npm run storybook:build"
+
+[tasks."storybook:test"]
+description = "Test storybook stories"
+run = "npm run storybook:test"
