@@ -5,6 +5,8 @@ import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
 
+import eslintPluginSecurity from "eslint-plugin-security";
+
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
@@ -16,7 +18,8 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
   ]),
-  ...storybook.configs["flat/recommended"]
+  ...storybook.configs["flat/recommended"],
+  ...[eslintPluginSecurity.configs.recommended],
 ]);
 
 export default eslintConfig;

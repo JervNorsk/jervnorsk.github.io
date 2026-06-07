@@ -5,18 +5,25 @@ config_roots = [
   "apps/portfolio"
 ]
 
+[tools]
+# ==== TOOLS | DEVCONTAINER =========================================
+node = "24.16.0"
+devcontainer-cli = "0.87.0"
+
+# ==== TOOLS | GITHUB ===============================================
+act = "0.2.82"
+
+
+# ==== ENVIRONMENTS =================================================
 [env]
-# ==== MISE =========================================================
+
+# ==== ENVIRONMENTS | MISE ==========================================
 MISE_EXPERIMENTAL = "true"
 MISE_LOG_LEVEL = "INFO"
 MISE_PROJECT_NAME = "{{config_root | basename}}"
 
-# ==== INFRASTRUCTURE ===============================================
-K8S_CLUSTER_NAME = 'dev'
 
-[tools]
-node = "24.16.0"
-devcontainer-cli = "latest"
+# ==== TASKS | AGENT ================================================
 
 [tasks."agent:context:resume"]
 description = "Create a single file that resume the current context of repository"
@@ -27,16 +34,18 @@ npx repomix --include '*.*,apps/portfolio/**/*.*'
 '''
 hide = true
 
-[tasks."devcontainer:up"]
+# ==== TASKS | WORKSPACE =============================================
+
+[tasks."workspace:up"]
 description = "Create an isolate container where develop"
 run = '''
 #!/usr/bin/env bash
 
-devcontainer up --workspace-folder . --id-label name='{{ env.MISE_PROJECT_NAME }}'
+workspace up --workspace-folder . --id-label name='{{ env.MISE_PROJECT_NAME }}'
 '''
 
-[tasks."devcontainer:down"]
-description = "Destroy the devcontainer"
+[tasks."workspace:down"]
+description = "Destroy the workspace"
 run = '''
 #!/usr/bin/env bash
 CONTAINER_ID=$(docker ps -a -q --filter "label=name=${MISE_PROJECT_NAME}")
@@ -48,23 +57,31 @@ fi
 docker rm -f "${CONTAINER_ID}"
 '''
 
-[tasks."devcontainer:exec"]
-description = "Attach a bash session to the devcontainer"
+[tasks."workspace:exec"]
+description = "Attach a bash session to the workspace"
 usage = '''
  arg "<args>" help="Arguments to pass"
 '''
 run = '''
 #!/usr/bin/env bash
-devcontainer exec --workspace-folder . --id-label name='{{ env.MISE_PROJECT_NAME }}' {{ usage.args }}
+workspace exec --workspace-folder . --id-label name='{{ env.MISE_PROJECT_NAME }}' {{ usage.args }}
 '''
 
-[tasks."devcontainer:shell"]
-description = "Attach a bash session to the devcontainer"
+[tasks."workspace:shell"]
+description = "Attach a bash session to the workspace"
 run = '''
 #!/usr/bin/env bash
-devcontainer up --workspace-folder . --id-label name='{{ env.MISE_PROJECT_NAME }}'
-devcontainer exec --workspace-folder . --id-label name='{{ env.MISE_PROJECT_NAME }}' bash
+workspace up --workspace-folder . --id-label name='{{ env.MISE_PROJECT_NAME }}'
+workspace exec --workspace-folder . --id-label name='{{ env.MISE_PROJECT_NAME }}' bash
 '''
+
+# ==== TASKS | WORKFLOW =============================================
+
+[tasks."workflow:run"]
+description = "Run workflow files"
+run = [
+  "act pull_request"
+]
 
 #[tasks."dev"]
 #description = "Avvia l'Inner Loop con Skaffold"

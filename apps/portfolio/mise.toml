@@ -1,33 +1,113 @@
 [tools]
 node = "24.16.0"
-npm = "latest"
+npm = "11.6.0"
 
 [tasks."setup"]
-description = "Configure project"
+description = "Install project tools and configure environment"
 run = [
   "npm install"
 ]
+#hide = true
+
+[tasks."setup:test"]
+description = "Install project tools and configure environment (Test Only)"
+run = [
+  "npm run storybook:test:install",
+]
+#hide = true
 
 [tasks."build"]
+description = "Build project"
+depends = [
+  "build:app",
+  "build:storybook"
+]
+#hide = true
+
+[tasks."build:app"]
 description = "Build application"
-run = "npm run next:build"
+run = [
+  "npm run next:build",
+]
+hide = true
+
+[tasks."build:storybook"]
+description = "Build Storybook documentation"
+run = [
+  "npm run storybook:build"
+]
+hide = true
+
+[tasks."lint"]
+description = "Check project code, types and security"
+run = [
+  { task = "lint:app" },
+  { task = "security:scan" },
+]
+#hide = true
+
+[tasks."lint:app"]
+description = "Check Next.js code and types"
+run = [
+  "npm run next:lint",
+  "npm run next:type-check"
+]
+hide = true
+
+[tasks."security:scan"]
+description = "Performs software dependency audit (SCA) by locking the build on critical failures"
+run = [
+  "npm audit --audit-level=high"
+]
+hide = true
+
+[tasks."test"]
+description = "Test project"
+depends = [
+  "test:storybook"
+]
+#hide = true
+
+[tasks."test:storybook"]
+description = "Run modern component-driven tests via Vitest Browser"
+run = [
+  "npm run storybook:test"
+]
+hide = true
 
 [tasks."dev"]
-description = "Run application in development mode"
-run = "npm run next:dev"
+description = "Run project in development mode"
+run = [
+  { tasks = [
+    "dev:app",
+    "dev:storybook"
+  ]}
+]
+
+[tasks."dev:app"]
+description = "Run Next.js development server"
+run = [
+  "npm run next:dev"
+]
+hide = true
+
+[tasks."dev:storybook"]
+description = "Run Storybook development server"
+run = [
+  "npm run storybook:dev"
+]
+hide = true
 
 [tasks."start"]
+description = "Run project in production mode"
+depends = [
+  "start:app"
+]
+#hide = true
+
+[tasks."start:app"]
 description = "Run application in production mode"
-run = "npm run next:start"
-
-[tasks."storybook:dev"]
-description = "Run storybook application"
-run = "npm run storybook:dev"
-
-[tasks."storybook:build"]
-description = "Build storybook stories"
-run = "npm run storybook:build"
-
-[tasks."storybook:test"]
-description = "Test storybook stories"
-run = "npm run storybook:test"
+run = [
+  "npm run next:start"
+]
+hide = true

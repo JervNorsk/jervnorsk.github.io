@@ -1,0 +1,77 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [ "main", "migration/**", "feature/**" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  quality-gate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+
+      - name: SAST / Secret Scanning via Trivy
+        if: ${{ !env.ACT }}
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0 -> Trivy v0.70.0
+        with:
+          scan-type: 'fs'
+          ignore-unfixed: true
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'HIGH,CRITICAL'
+
+      - name: Upload SARIF Security Report to GitHub
+        if: ${{ always() && !env.ACT }}
+        uses: github/codeql-action/upload-sarif@8aad20d150bbac5944a9f9d289da16a4b0d87c1e # v4.36.2
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+      - name: Install Mise (Runtime & Tools Manager)
+        uses: jdx/mise-action@dba19683ed58901619b14f395a24841710cb4925 # v4.1.0
+        with:
+          experimental: true
+
+      - name: Cache NPM Storage
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
+      - name: Setup Tools & Environment
+        run: mise //apps/portfolio:setup
+
+      - name: Linting Source Code
+        run: mise //apps/portfolio:lint
+
+      - name: Build Source Code
+        run: mise //apps/portfolio:build
+
+      - name: Upload Build Artifact
+        if: ${{ !env.ACT }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: app-portfolio
+          path: apps/portfolio/build/nextjs
+          retention-days: 5
+          overwrite: 'true'
+
+      - name: Cache Playwright Browsers
+        id: playwright-cache
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+
+      - name: Setup Automated Test Tools & Environment
+        run: mise //apps/portfolio:setup:test
+
+      - name: Run Automated Tests
+        run: mise //apps/portfolio:test

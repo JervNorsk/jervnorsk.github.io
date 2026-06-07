@@ -1,8 +1,5 @@
 import type { Preview } from '@storybook/nextjs-vite'
 
-//@ts-ignore
-// import "../src/app/globals.css";
-//@ts-ignore
 import "./preview.css";
 
 import { MINIMAL_VIEWPORTS, INITIAL_VIEWPORTS } from 'storybook/viewport';

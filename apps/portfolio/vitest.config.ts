@@ -12,6 +12,22 @@ const dirname =
 
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
+  optimizeDeps: {
+    include: [
+      'react',
+      'react-dom',
+      'react/jsx-dev-runtime',
+      '@storybook/addon-vitest'
+    ],
+  },
+  server: {
+    fs: {
+      strict: false,
+    },
+    watch: {
+      ignored: ['**/node_modules/**', '**/.next/**'],
+    },
+  },
   test: {
     projects: [
       {

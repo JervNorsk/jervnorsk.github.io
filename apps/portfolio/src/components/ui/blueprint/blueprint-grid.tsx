@@ -7,8 +7,7 @@ interface BlueprintGridProps {
 export function BlueprintGrid(
   {
     gridSize = 32,
-    opacity = 0.03,
-    className = ""
+    opacity = 0.03
   }: BlueprintGridProps
 ) {
   return (
